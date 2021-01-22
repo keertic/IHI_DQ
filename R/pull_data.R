@@ -10,7 +10,8 @@
 #' @param end The end data time that you wish to stop pulling data from, as a string.
 #' @return A list of two data frames: first, raw data of all columns from the `table` that was called; second, just the Facility_Name
 #' and C_Facility_ID from the MFT table.
-#' @import RODBC
+#' @import odbc
+#' @import DBI
 #' @export
 #"Syndromic", table= "Syndromic_Msg"
 #conn <- dbConnect(odbc(), Driver = "ODBC Driver 11 for SQL Server", Server = "10.1.10.209", Database = "Syndromic", table= "Syndromic_Msg", UID = "kchalasani",PWD = "S6eonJCZNEIrB69KzixA", Port = 1433)
