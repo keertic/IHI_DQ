@@ -19,9 +19,11 @@ pull_data <- function(username, password, table, mft, start, end) {
   channel <- dbConnect(odbc(), Driver = "ODBC Driver 11 for SQL Server", Server = "10.1.10.209", Database = "Syndromic", 
             table= "Syndromic_Msg", username, password, Port = 1433)
   #channel <- RODBC::odbcConnect("BioSense_Platform", paste0("BIOSENSE\\", username), password) # open channel
-  data <- DBI::dbGetQuery(
+  #RawMessage <- DBI::dbSendQuery(conn, statement = paste0("SELECT C_Facility_IDFROM Syndromic_Msg group by C_Facility_ID"))
+
+  data <- DBI::dbSendQuery(
     channel,
-    paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "'") # create sql query
+   statement = paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "'") # create sql query
   , as.is=TRUE
   )
   
