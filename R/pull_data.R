@@ -14,8 +14,8 @@
 #' @export
 pull_data <- function(username, password, table, mft, start, end) {
   
-  channel <- odbcConnect("BioSense_Platform", paste0("BIOSENSE\\", username), password) # open channel
-  data <- sqlQuery(
+  channel <- RODBC::odbcConnect("BioSense_Platform", paste0("BIOSENSE\\", username), password) # open channel
+  data <- RODBC::sqlQuery(
     channel,
     paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "'") # create sql query
   , as.is=TRUE
