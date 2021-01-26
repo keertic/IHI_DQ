@@ -24,7 +24,7 @@ pull_data <- function(username, password, table, start, end) {
 
   data <- DBI::dbSendQuery(
     channel,
-   statement = paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "'") # create sql query
+   statement = paste0("SELECT * FROM ", table, " WHERE C_Visit_Date >= '", start, "' AND C_Visit_Date <= '", end, "'") # create sql query
   , as.is=TRUE
   )
   
