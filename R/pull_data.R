@@ -15,7 +15,7 @@
 #' @export
 #"Syndromic", table= "Syndromic_Msg"
 #conn <- dbConnect(odbc(), Driver = "ODBC Driver 11 for SQL Server", Server = "10.1.10.209", Database = "Syndromic", table= "Syndromic_Msg", UID = "kchalasani",PWD = "S6eonJCZNEIrB69KzixA", Port = 1433)
-pull_data <- function(username, password, table, mft, start, end) {
+pull_data <- function(username, password, table, start, end) {
   
   channel <- dbConnect(odbc(), Driver = "ODBC Driver 11 for SQL Server", Server = "10.1.10.209", Database = "Syndromic", 
             table= "Syndromic_Msg", username, password, Port = 1433)
@@ -28,7 +28,7 @@ pull_data <- function(username, password, table, mft, start, end) {
   , as.is=TRUE
   )
   
-  names <- DBI::dbGetQuery(channel, paste0("SELECT Facility_Name, C_Facility_ID FROM ", mft)
+  names <- DBI::dbGetQuery(channel, paste0("SELECT Facility_Name, C_Facility_ID FROM ")
                    , as.is=TRUE
                    ) # get mft from channel
     
