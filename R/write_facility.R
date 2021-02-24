@@ -24,8 +24,11 @@
 write_facility <- function(username, password, table, mft, start, end, facility, directory="", nexamples=0) {
 
   # pull data
-  channel <- odbcConnect("BioSense_Platform", paste0("BIOSENSE\\", username), password) # open channel
-  data <- sqlQuery(
+ # channel <- odbcConnect("BioSense_Platform", paste0("BIOSENSE\\", username), password)# open channel
+  channel <-  dbConnect(odbc(), Driver = "ODBC Driver 11 for SQL Server", Server = "10.1.10.209", Database = "Syndromic",
+table= "Syndromic_Msg", UID= username, PWD=password , Port = 1433)
+  
+  data <- DBI::dbGetQuery(
     channel,
     paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "' AND C_Facility_ID = ", facility) # create sql query
   , as.is=TRUE)
