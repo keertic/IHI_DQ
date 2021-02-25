@@ -61,7 +61,7 @@ write_reports <- function(username, password, table, mft, start, end, directory=
                    right_join(fnames, ., by=c("C_Facility_ID" = "Facility")),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls, by=c("C_Facility_ID" = "Facility")), "auto")
+  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls, by=c("C_Facility_ID" = "Facility"))), "auto")
   freezePane(wb, sheet1, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet1, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
            rows=1:3, cols=1:ncol(right_join(fnames, state_req_nulls, by=c("C_Facility_ID" = "Facility"))), gridExpand=TRUE)
