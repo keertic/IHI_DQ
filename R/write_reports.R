@@ -58,13 +58,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet1,
                  state_req_nulls %>% 
-                   right_join(fnames, ., by=c("C_Facility_ID" = "Facility")),
+                   right_join(fnames, ., by=c("Facility" = "C_Facility_ID")),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls, by=c("C_Facility_ID" = "Facility"))), "auto")
+  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls,  by=c("Facility" = "C_Facility_ID"))), "auto")
   freezePane(wb, sheet1, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet1, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_req_nulls, by=c("C_Facility_ID" = "Facility"))), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_req_nulls,  by=c("Facility" = "C_Facility_ID"))), gridExpand=TRUE)
   # sheet 2: optional nulls
   sheet2 <- addWorksheet(wb, "Optional Nulls")
   # putting statewide above the filter
@@ -73,13 +73,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet2,
                  state_opt_nulls %>% 
-                   right_join(fnames, ., by=c("C_Facility_ID" = "Facility")),
+                   right_join(fnames, .,  by=c("Facility" = "C_Facility_ID")),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet2, 1:ncol(right_join(fnames, state_opt_nulls, by=c("C_Facility_ID" = "Facility"))), "auto")
+  setColWidths(wb, sheet2, 1:ncol(right_join(fnames, state_opt_nulls,  by=c("Facility" = "C_Facility_ID"))), "auto")
   freezePane(wb, sheet2, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet2, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_opt_nulls, by=c("C_Facility_ID" = "Facility"))), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_opt_nulls,  by=c("Facility" = "C_Facility_ID"))), gridExpand=TRUE)
   # sheet 3: invalids
   sheet3 <- addWorksheet(wb, "Invalids")
   # putting statewide above the filter
@@ -88,13 +88,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet3,
                  state_invalids %>% 
-                   right_join(fnames, ., by=c("C_Facility_ID" = "Facility")),
+                   right_join(fnames, .,  by=c("Facility" = "C_Facility_ID")),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by=c("C_Facility_ID" = "Facility"))), "auto")
+  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by=c("Facility" = "C_Facility_ID"))), "auto")
   freezePane(wb, sheet3, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet3, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids, by=c("C_Facility_ID" = "Facility"))), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids,  by=c("Facility" = "C_Facility_ID"))), gridExpand=TRUE)
   # sheet 4: visit-arrival lag
   sheet4 <- addWorksheet(wb, "Visit-Arrival Lag")
   writeDataTable(wb, sheet4,
