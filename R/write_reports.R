@@ -88,13 +88,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet3,
                  state_invalids %>% 
-                   right_join(fnames, ., by = "Facility"),
+                   right_join(fnames, ., by=c("C_Facility_ID" = "Facility")),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by = "Facility")), "auto")
+  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by=c("C_Facility_ID" = "Facility"))), "auto")
   freezePane(wb, sheet3, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet3, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids, by = "Facility")), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids, by=c("C_Facility_ID" = "Facility"))), gridExpand=TRUE)
   # sheet 4: visit-arrival lag
   sheet4 <- addWorksheet(wb, "Visit-Arrival Lag")
   writeDataTable(wb, sheet4,
