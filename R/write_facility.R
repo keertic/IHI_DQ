@@ -33,7 +33,7 @@ table= "Syndromic_Msg", UID= username, PWD=password , Port = 1433)
     paste0("SELECT * FROM ", table, " WHERE C_Visit_Date_Time >= '", start, "' AND C_Visit_Date_Time <= '", end, "' AND C_Facility_ID = ", facility) # create sql query
   , as.is=TRUE)
   if (nrow(data) == 0) stop("The query yielded no data.")
-  name <- as.character(unlist(unname(c(sqlQuery(channel, paste0("SELECT GenericDSN as Facility_Name FROM ", mft, " WHERE C_Facility_ID = ", facility)))))) # get name from mft
+  name <- as.character(unlist(unname(c(sqlQuery(channel, paste0("SELECT GenericDSN as Facility_Name FROM ", mft, " WHERE Facility = ", facility)))))) # get name from mft
   odbcCloseAll() # close connection
 
   # get hl7 values
