@@ -33,7 +33,7 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   data <- pull$data
   if (nrow(data) == 0) stop("The query yielded no data.")
   # save names into names, getting rid of any duplicate names (take first listed)
-  fnames <- pull$names %>% group_by(C_Facility_ID) %>% slice(1) %>% ungroup()
+  fnames <- pull$names %>% group_by(Facility) %>% slice(1) %>% ungroup()
   
   
   
@@ -58,13 +58,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet1,
                  state_req_nulls %>% 
-                   right_join(fnames, ., by = "C_Facility_ID"),
+                   right_join(fnames, ., by = "Facility"),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls, by = "C_Facility_ID")), "auto")
+  setColWidths(wb, sheet1, 1:ncol(right_join(fnames, state_req_nulls, by = "Facility")), "auto")
   freezePane(wb, sheet1, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet1, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_req_nulls, by = "C_Facility_ID")), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_req_nulls, by = "Facility")), gridExpand=TRUE)
   # sheet 2: optional nulls
   sheet2 <- addWorksheet(wb, "Optional Nulls")
   # putting statewide above the filter
@@ -73,13 +73,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet2,
                  state_opt_nulls %>% 
-                   right_join(fnames, ., by = "C_Facility_ID"),
+                   right_join(fnames, ., by = "Facility"),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet2, 1:ncol(right_join(fnames, state_opt_nulls, by = "C_Facility_ID")), "auto")
+  setColWidths(wb, sheet2, 1:ncol(right_join(fnames, state_opt_nulls, by = "Facility")), "auto")
   freezePane(wb, sheet2, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet2, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_opt_nulls, by = "C_Facility_ID")), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_opt_nulls, by = "Facility")), gridExpand=TRUE)
   # sheet 3: invalids
   sheet3 <- addWorksheet(wb, "Invalids")
   # putting statewide above the filter
@@ -88,13 +88,13 @@ write_reports <- function(username, password, table, mft, start, end, directory=
   # writing data table below
   writeDataTable(wb, sheet3,
                  state_invalids %>% 
-                   right_join(fnames, ., by = "C_Facility_ID"),
+                   right_join(fnames, ., by = "Facility"),
                  startCol=1, startRow=3, bandedRows=TRUE)
   # formatting widths, freeze panes, and color
-  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by = "C_Facility_ID")), "auto")
+  setColWidths(wb, sheet3, 1:ncol(right_join(fnames, state_invalids, by = "Facility")), "auto")
   freezePane(wb, sheet3, firstActiveRow=4, firstActiveCol=4)
   addStyle(wb, sheet3, createStyle(fgFill="#4f81bd", fontColour="#ffffff", textDecoration = "bold"),
-           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids, by = "C_Facility_ID")), gridExpand=TRUE)
+           rows=1:3, cols=1:ncol(right_join(fnames, state_invalids, by = "Facility")), gridExpand=TRUE)
   # sheet 4: visit-arrival lag
   sheet4 <- addWorksheet(wb, "Visit-Arrival Lag")
   writeDataTable(wb, sheet4,
@@ -119,7 +119,7 @@ write_reports <- function(username, password, table, mft, start, end, directory=
     data("hl7_values", envir=environment())
     hl7_values$Field <- as.character(hl7_values$Field)
     # get name of facility
-    fname <- as.character(unlist(unname(c(fnames[which(fnames$C_Facility_ID==i),1]))))
+    fname <- as.character(unlist(unname(c(fnames[which(fnames$Facility==i),1]))))
 
     # write to xlsx
     # initialize workbook
@@ -251,7 +251,7 @@ write_reports <- function(username, password, table, mft, start, end, directory=
       setColWidths(wb, sheet2, 1:ncol(null_examples), "auto")
       freezePane(wb, sheet2, firstActiveRow=2, firstActiveCol=3)
       # write sheet
-      fname <- as.character(unlist(unname(c(fnames[which(fnames$C_Facility_ID==i),1])))) # get facility name
+      fname <- as.character(unlist(unname(c(fnames[which(fnames$Facility==i),1])))) # get facility name
       filename <- str_replace_all(fname, "[^[a-zA-z\\s0-9]]", "") %>% # get rid of punctuation from faciltiy name
         str_replace_all("[\\s]", "_") # replace spaces with underscores
       saveWorkbook(wb, paste0(directory, "/", filename, "_Examples.xlsx"), overwrite=TRUE)
