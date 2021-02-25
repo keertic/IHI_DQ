@@ -28,7 +28,7 @@ table= "Syndromic_Msg", UID= username, PWD=password , Port = 1433)
   , as.is=TRUE
   )
   
-  names <- DBI::dbGetQuery(channel, paste0("SELECT Facility_Name, C_Facility_ID FROM " , mft)
+  names <- DBI::dbGetQuery(channel, paste0("SELECT Facility_Name, Facility FROM " , mft)
                    , as.is=TRUE
                    ) # get mft from channel
     
