@@ -26,6 +26,6 @@ va_lag <- function(data, names, offset) {
       ungroup() %>% # ungroup explicitly
       group_by(C_Facility_ID) %>% # regroup by facility
       summarise(First_Message=round(mean(lag, na.rm=TRUE),2)) %>% # get the average, round by two digits
-      right_join(names, ., by="C_Facility_ID") # join with the names data
+      right_join(names, ., by=c("Facility" = "C_Facility_ID")) # join with the names data
   )
 }
