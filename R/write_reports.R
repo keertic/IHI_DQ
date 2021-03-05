@@ -133,7 +133,7 @@ write_reports <- function(username, password, table, mft, start, end, directory=
                      filter(C_Facility_ID==i) %>% # taking only rows with the same facility ID
                      gather(key=Field, value=Value, convert=TRUE) %>% # suppressed warnings because this will tell you it converted all to characters
                      distinct() %>% # get only distinct entries
-                     bind_rows(data.frame(Field="Facility_Name", Value=fname), .) %>% # add name to the top
+                     #bind_rows(data.frame(Field="Facility_Name", Value=fname), .) %>% # add name to the top
                      # bind with date ranges and number of records and visits
                      bind_rows(data.frame(Field=c("Patient_Visit_Dates", "Message_Arrival_Dates", 
                                                   "Number of Records", "Number of Visits"),
